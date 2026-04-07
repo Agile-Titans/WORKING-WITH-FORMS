@@ -1,31 +1,31 @@
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
+
 import com.toedter.calendar.JCalendar;
 
 public class EmployeeRegistrationForm extends JFrame {
 
-    private JTextField nameField, emailField;
-    private JPasswordField passwordField;
-    private JComboBox<String> departmentBox;
-    private JTree orgTree;
-    private JCalendar calendar;
+    JTextField nameField, emailField;
+    JPasswordField passwordField;
+    JComboBox<String> departmentBox;
+    JTree orgTree;
+    JCalendar calendar;
 
     public EmployeeRegistrationForm() {
         initializeFrame();
         add(createMainPanel());
     }
 
-    // ================= FRAME SETUP =================
-    private void initializeFrame() {
+    public void initializeFrame() {
         setTitle("Employee Registration System");
         setSize(500, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
     }
 
-    // ================= MAIN PANEL =================
-    private JPanel createMainPanel() {
+
+    public JPanel createMainPanel() {
         JPanel panel = new JPanel(new GridLayout(8, 2, 10, 10));
 
         panel.add(new JLabel("Full Name:"));
@@ -52,34 +52,34 @@ public class EmployeeRegistrationForm extends JFrame {
         return panel;
     }
 
-    // ================= COMPONENT METHODS =================
-    private JTextField createNameField() {
+
+    public JTextField createNameField() {
         nameField = new JTextField();
         return nameField;
     }
 
-    private JTextField createEmailField() {
+    public JTextField createEmailField() {
         emailField = new JTextField();
         return emailField;
     }
 
-    private JPasswordField createPasswordField() {
+    public JPasswordField createPasswordField() {
         passwordField = new JPasswordField();
         return passwordField;
     }
 
-    private JComboBox<String> createDepartmentBox() {
+    public JComboBox<String> createDepartmentBox() {
         String[] departments = {"IT", "Finance", "HR", "Marketing"};
         departmentBox = new JComboBox<>(departments);
         return departmentBox;
     }
 
-    private JCalendar createCalendar() {
+    public JCalendar createCalendar() {
         calendar = new JCalendar();
         return calendar;
     }
 
-    private JScrollPane createTree() {
+    public JScrollPane createTree() {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Company");
 
         DefaultMutableTreeNode it = new DefaultMutableTreeNode("IT");
@@ -97,20 +97,20 @@ public class EmployeeRegistrationForm extends JFrame {
         return new JScrollPane(orgTree);
     }
 
-    private JButton createSubmitButton() {
+    public JButton createSubmitButton() {
         JButton btn = new JButton("Submit");
         btn.addActionListener(e -> handleSubmit());
         return btn;
     }
 
-    private JButton createClearButton() {
+    public JButton createClearButton() {
         JButton btn = new JButton("Clear");
         btn.addActionListener(e -> clearForm());
         return btn;
     }
 
-    // ================= LOGIC METHODS =================
-    private void handleSubmit() {
+
+    public void handleSubmit() {
         String name = nameField.getText();
         String email = emailField.getText();
         String password = new String(passwordField.getPassword());
@@ -124,7 +124,7 @@ public class EmployeeRegistrationForm extends JFrame {
         JOptionPane.showMessageDialog(this, summary);
     }
 
-    private boolean validateInput(String name, String email, String password, Object node) {
+    boolean validateInput(String name, String email, String password, Object node) {
         if (name.isEmpty() || email.isEmpty() || password.isEmpty() || node == null) {
             JOptionPane.showMessageDialog(this, "Please fill all fields!");
             return false;
@@ -132,8 +132,8 @@ public class EmployeeRegistrationForm extends JFrame {
         return true;
     }
 
-    private String buildSummary(String name, String email, String password,
-                                String department, Object node) {
+    String buildSummary(String name, String email, String password,
+                        String department, Object node) {
 
         String maskedPassword = "*".repeat(password.length());
 
@@ -145,7 +145,7 @@ public class EmployeeRegistrationForm extends JFrame {
                 "\nOrganization: " + node.toString();
     }
 
-    private void clearForm() {
+    public void clearForm() {
         nameField.setText("");
         emailField.setText("");
         passwordField.setText("");
