@@ -24,7 +24,6 @@ public class EmployeeRegistrationForm extends JFrame {
         setLayout(new BorderLayout());
     }
 
-
     public JPanel createMainPanel() {
         JPanel panel = new JPanel(new GridLayout(8, 2, 10, 10));
 
@@ -51,7 +50,6 @@ public class EmployeeRegistrationForm extends JFrame {
 
         return panel;
     }
-
 
     public JTextField createNameField() {
         nameField = new JTextField();
@@ -109,7 +107,6 @@ public class EmployeeRegistrationForm extends JFrame {
         return btn;
     }
 
-
     public void handleSubmit() {
         String name = nameField.getText();
         String email = emailField.getText();
@@ -152,5 +149,4 @@ public class EmployeeRegistrationForm extends JFrame {
         departmentBox.setSelectedIndex(0);
         orgTree.clearSelection();
     }
-
 }
