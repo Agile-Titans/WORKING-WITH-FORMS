@@ -57,27 +57,19 @@ def sendTeamsNotification() {
 }
 
 def sendEmailNotification() {
-    def previousResult = currentBuild.previousBuild?.result
-    boolean isTransition = (previousResult == null || previousResult == 'SUCCESS' || previousResult == 'UNSTABLE')
-
-    if (isTransition) {
-        emailext(
-            subject: "[BUILD FAILED] ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: """
-                <html>
-                <body>
-                    <h2 style="color:red;">Build Failed!</h2>
-                    <p><b>Job:</b> ${env.JOB_NAME}</p>
-                    <p><b>Build Number:</b> #${env.BUILD_NUMBER}</p>
-                    <p><b>Console Output:</b> <a href="${env.BUILD_URL}console">Click Here</a></p>
-                    <p><b>Previous Status:</b> ${previousResult ?: 'N/A'}</p>
-                </body>
-                </html>
-            """,
-            mimeType: 'text/html',
-            to: "${env.TEAM_LEAD_EMAIL}"
-        )
-    } else {
-        echo "No email sent — build was already failing."
-    }
+    emailext(
+        subject: "[BUILD FAILED] ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+        body: """
+            <html>
+            <body>
+                <h2 style="color:red;">Build Failed!</h2>
+                <p><b>Job:</b> ${env.JOB_NAME}</p>
+                <p><b>Build Number:</b> #${env.BUILD_NUMBER}</p>
+                <p><b>Console Output:</b> <a href="${env.BUILD_URL}console">Click Here</a></p>
+            </body>
+            </html>
+        """,
+        mimeType: 'text/html',
+        to: "${env.TEAM_LEAD_EMAIL}"
+    )
 }
