@@ -3,6 +3,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 
 import com.toedter.calendar.JCalendar;
+import java.awt.GraphicsEnvironment;
 
 public class EmployeeRegistrationForm extends JFrame {
 
@@ -13,8 +14,10 @@ public class EmployeeRegistrationForm extends JFrame {
     JCalendar calendar;
 
     public EmployeeRegistrationForm() {
-        initializeFrame();
-        add(createMainPanel());
+        if (!GraphicsEnvironment.isHeadless()) {
+            initializeFrame();
+            add(createMainPanel());
+        }
     }
 
     public void initializeFrame() {
