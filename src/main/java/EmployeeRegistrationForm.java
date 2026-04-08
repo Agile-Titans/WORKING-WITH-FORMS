@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
+import java.awt.GraphicsEnvironment;
 
 import com.toedter.calendar.JCalendar;
 
@@ -16,7 +17,6 @@ public class EmployeeRegistrationForm {
 
     public EmployeeRegistrationForm() {
     }
-
 
     public void createAndShowGUI() {
         if (GraphicsEnvironment.isHeadless()) return;
@@ -127,12 +127,18 @@ public class EmployeeRegistrationForm {
 
         String summary = buildSummary(name, email, password, department, selectedNode);
 
-        JOptionPane.showMessageDialog(frame, summary);
+        if (!GraphicsEnvironment.isHeadless()) {
+            JOptionPane.showMessageDialog(frame, summary);
+        }
     }
 
     boolean validateInput(String name, String email, String password, Object node) {
         if (name.isEmpty() || email.isEmpty() || password.isEmpty() || node == null) {
-            JOptionPane.showMessageDialog(frame, "Please fill all fields!");
+
+            if (!GraphicsEnvironment.isHeadless()) {
+                JOptionPane.showMessageDialog(frame, "Please fill all fields!");
+            }
+
             return false;
         }
         return true;
@@ -143,11 +149,14 @@ public class EmployeeRegistrationForm {
 
         String maskedPassword = "*".repeat(password.length());
 
+        // FIX: prevent NullPointerException
+        String dob = (calendar != null) ? calendar.getDate().toString() : "N/A";
+
         return "Name: " + name +
                 "\nEmail: " + email +
                 "\nPassword: " + maskedPassword +
                 "\nDepartment: " + department +
-                "\nDOB: " + calendar.getDate() +
+                "\nDOB: " + dob +
                 "\nOrganization: " + node.toString();
     }
 
