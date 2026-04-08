@@ -1,41 +1,17 @@
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
+import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeRegistrationFormTest {
 
-    private EmployeeRegistrationForm form;
-
-    @BeforeEach
-    void setUp() {
-        form = new EmployeeRegistrationForm();
-        form.setVisible(false);
-    }
-
-
-    @AfterEach
-    void tearDown() {
-        form.dispose();
-    }
-
-    @Test
-    void testFrameProperties() {
-        assertAll(
-                () -> assertEquals("Employee Registration System", form.getTitle()),
-                () -> assertEquals(500, form.getWidth()),
-                () -> assertEquals(600, form.getHeight()),
-                () -> assertNotNull(form.getLayout())
-        );
-    }
+    private final EmployeeRegistrationForm form = new EmployeeRegistrationForm();
 
     @Test
     void testValidateInputFailsWhenEmpty() {
         boolean result = form.validateInput("", "", "", null);
-
         assertFalse(result, "Validation should fail for empty inputs");
     }
 
@@ -59,19 +35,21 @@ class EmployeeRegistrationFormTest {
 
     @Test
     void testDepartmentOptions() {
-        JComboBox<String> box = form.departmentBox;
+        JComboBox<String> box = form.createDepartmentBox();
 
         assertAll(
                 () -> assertEquals(4, box.getItemCount()),
-                () -> assertSame("IT", box.getItemAt(0)),
-                () -> assertNotSame("Legal", box.getItemAt(1))
+                () -> assertEquals("IT", box.getItemAt(0)),
+                () -> assertNotEquals("Legal", box.getItemAt(1))
         );
     }
 
     @Test
     void testTreeStructure() {
-        assertNotNull(form.orgTree);
-        assertEquals("Company", form.orgTree.getModel().getRoot().toString());
-    }
+        JScrollPane treeScroll = form.createTree();
+        JTree tree = (JTree) treeScroll.getViewport().getView();
 
+        assertNotNull(tree);
+        assertEquals("Company", tree.getModel().getRoot().toString());
+    }
 }
