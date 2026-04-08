@@ -10,13 +10,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean compile'
+                bat 'mvn clean compile'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
     }
@@ -43,47 +43,16 @@ pipeline {
 }
 
 def sendSlackNotification(emoji, status, color) {
-    def payload = """
-    {
-      "attachments": [
-        {
-          "color": "${color}",
-          "text": "${emoji} *Build ${status}*\\nJob: ${env.JOB_NAME} #${env.BUILD_NUMBER}\\nConsole: ${env.BUILD_URL}console"
-        }
-      ]
-    }
-    """
-    sh """
-        curl -s -X POST \
-             -H 'Content-Type: application/json' \
-             -d '${payload.trim()}' \
-             "\${SLACK_WEBHOOK_URL}"
+    def payload = """{"attachments":[{"color":"${color}","text":"${emoji} Build ${status} - Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} - Console: ${env.BUILD_URL}console"}]}"""
+    bat """
+        curl -s -X POST -H "Content-Type: application/json" -d "${payload.replace('"', '\\"')}" "%SLACK_WEBHOOK_URL%"
     """
 }
 
 def sendTeamsNotification() {
-    def payload = """
-    {
-      "@type": "MessageCard",
-      "@context": "https://schema.org/extensions",
-      "themeColor": "FF0000",
-      "summary": "Build Failed",
-      "sections": [{
-        "activityTitle": ":x: Build FAILED",
-        "activitySubtitle": "${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-        "facts": [
-          { "name": "Job", "value": "${env.JOB_NAME}" },
-          { "name": "Build", "value": "#${env.BUILD_NUMBER}" },
-          { "name": "Console", "value": "${env.BUILD_URL}console" }
-        ]
-      }]
-    }
-    """
-    sh """
-        curl -s -X POST \
-             -H 'Content-Type: application/json' \
-             -d '${payload.trim()}' \
-             "\${TEAMS_WEBHOOK_URL}"
+    def payload = """{"@type":"MessageCard","@context":"https://schema.org/extensions","themeColor":"FF0000","summary":"Build Failed","sections":[{"activityTitle":"Build FAILED","activitySubtitle":"${env.JOB_NAME} - Build #${env.BUILD_NUMBER}","facts":[{"name":"Job","value":"${env.JOB_NAME}"},{"name":"Build","value":"#${env.BUILD_NUMBER}"},{"name":"Console","value":"${env.BUILD_URL}console"}]}]}"""
+    bat """
+        curl -s -X POST -H "Content-Type: application/json" -d "${payload.replace('"', '\\"')}" "%TEAMS_WEBHOOK_URL%"
     """
 }
 
