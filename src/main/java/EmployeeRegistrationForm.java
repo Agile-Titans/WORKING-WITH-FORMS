@@ -1,3 +1,7 @@
+// Branch 4 - Form Validation and JOptionPane
+// Added validation to check no empty fields
+// Added ActionListener to Submit button
+// Display summary in JOptionPane with password hidden
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
