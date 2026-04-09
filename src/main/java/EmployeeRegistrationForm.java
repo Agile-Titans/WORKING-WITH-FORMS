@@ -1,3 +1,7 @@
+// Branch 1 - JFrame Setup and Basic Input Fields
+// Created JFrame with title Employee Registration System
+// Created JTextField for Full Name and Email
+// Created JPasswordField for Password input
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
