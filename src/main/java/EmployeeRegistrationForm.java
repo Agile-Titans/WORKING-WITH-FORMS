@@ -1,3 +1,7 @@
+// Branch 5 - Clear Button and Final Testing
+// Added ActionListener to Clear button to reset all fields
+// Added error message if validation fails
+// Tested full form submission and validation successfully
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
