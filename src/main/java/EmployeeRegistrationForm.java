@@ -1,3 +1,7 @@
+// Branch 2 - JComboBox and JCalendar Setup
+// Created JComboBox with IT Finance HR Marketing
+// Added JCalendar library to project
+// Created JCalendar for Date of Birth selection
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
