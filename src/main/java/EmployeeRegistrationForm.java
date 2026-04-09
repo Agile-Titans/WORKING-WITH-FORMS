@@ -1,3 +1,6 @@
+// Branch 3 - JTree Organization Structure
+// Created JTree with Company Departments Teams structure
+// Added Submit and Clear buttons to form
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
